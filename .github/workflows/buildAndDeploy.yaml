@@ -20,10 +20,10 @@ jobs:
           password: ${{ secrets.DOCKER_KEY }}
 
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/docker_Test:latest .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/dockertest:latest .
 
       - name: Push Docker image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/docker_Test:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/dockertest:latest
 
   Deploy-Laravel-Docker:
     needs: Build-Laravel-And-Push-Dockerhub
@@ -41,5 +41,5 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             docker-compose down
-            docker rmi ${{ secrets.DOCKER_USERNAME }}/docker_Test:latest
+            docker rmi ${{ secrets.DOCKER_USERNAME }}/dockertest:latest
             docker-compose up -d

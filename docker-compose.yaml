@@ -1,6 +1,6 @@
 services:
   server:
-    image: mahditalaldev/docker_Test:latest
+    image: mahditalaldev/dockertest:latest
     environment:
       - LARAVEL_DATABASE_HOST=database
       - LARAVEL_DATABASE_NAME=dockerTest_db
