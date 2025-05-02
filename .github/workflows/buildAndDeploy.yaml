@@ -94,8 +94,8 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            docker-compose down
-            docker rmi ${{ secrets.DOCKER_USERNAME }}/dockertestlara:latest
-            docker rmi ${{ secrets.DOCKER_USERNAME }}/dockertestnode:latest
-            docker rmi ${{ secrets.DOCKER_USERNAME }}/dockertestreact:latest
-            docker-compose up -d
+            sudo docker-compose down
+            sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/dockertestlara:latest
+            sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/dockertestnode:latest
+            sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/dockertestreact:latest
+            sudo docker-compose up -d
