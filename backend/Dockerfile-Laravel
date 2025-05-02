@@ -9,3 +9,10 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install --no-dev --optimize-autoloader
 
 COPY . .
+
+# Check the path
+COPY shellScript.sh /usr/local/bin/shellScript.sh
+
+RUN chmod +x /usr/local/bin/shellScript.sh
+
+ENTRYPOINT [ "shellScript" ]
