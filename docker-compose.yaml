@@ -1,6 +1,6 @@
 services:
   server:
-    image: mahditalaldev/dockertest:latest
+    image: mahditalaldev/dockertestlaravel:latest
     environment:
       - LARAVEL_DATABASE_HOST=database
       - LARAVEL_DATABASE_NAME=dockerTest_db
@@ -18,8 +18,22 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=1234
       - MYSQL_DATABASE=dockerTest_db
+    ports:
+      - 3306:3306
     volumes:
       - db-data:/var/lib/mysql
+
+  Node:
+    image: mahditalaldev/dockertestlaravelnode:latest
+    restart: always
+    ports:
+      - 3001:3001
+
+  React:
+   image: mahditalaldev/dockertestlaravelreact:latest
+   restart: always
+   ports: 
+      - 80:80
 
 volumes:
   db-data:

@@ -1,0 +1,42 @@
+# Step 1
+FROM node:20 AS image
+
+WORKDIR /usr/share/nginx/html
+
+RUN rm -rf ./*
+
+COPY ./frontend/package*.json .
+
+RUN npm install
+
+COPY ./react .
+
+RUN npm build
+
+# Step 2
+FROM nginx:1.27.5-alpine
+
+# Remove the default Apache page (optional)
+RUN rm -rf /usr/share/nginx/html/*
+
+# Enable rewirte mode
+# Check the directory path 
+RUN sed -i '/LoadModule rewrite_module/s/^#//g' /usr/local/apache2/conf/httpd.conf 
+RUN sed -i '/<Directory "\/usr\/local\/apache2\/htdocs">/,/<\/Directory>/s/AllowOverride None/AllowOverride All/' /usr/local/apache2/conf/httpd.conf
+
+# Copy built app into Apache's public folder
+COPY --from=image /usr/share/nginx/html/react/dist/ /usr/local/apache2/htdocs/
+
+# Expose port 80
+EXPOSE 80
+
+# Start Apache
+CMD ["httpd-foreground"]
+
+
+
+
+client:
+    image: muhammadnourhereh/birdly-client:staging
+    ports:
+      - 80:80
